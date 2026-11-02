@@ -63,7 +63,7 @@ object ShipSimulator {
         val updated  = advance(ship, random)
         ships = ships.updated(vesselId, updated)
 
-        val event = VesselPosition(
+                val clean = VesselPosition(
           eventId         = UUID.randomUUID().toString,
           vesselId        = vesselId,
           latitude        = round6(updated.latitude),
@@ -71,6 +71,7 @@ object ShipSimulator {
           speedKnots      = round2(updated.speedKnots),
           eventTimeMillis = System.currentTimeMillis()
         )
+        val event = maybeCorrupt(clean, random)
 
         val json   = mapper.writeValueAsString(event)
         val record = new ProducerRecord[String, String]("vessel.positions.raw", vesselId, json)
@@ -115,6 +116,21 @@ object ShipSimulator {
       )
     } else {
       ship.copy(latitude = newLat, longitude = newLon)
+    }
+  }
+
+  /** Deliberately corrupt ~5% of events so the validation path is exercised
+    * continuously. The return value is what actually gets sent to Kafka. */
+  def maybeCorrupt(event: VesselPosition, random: Random): VesselPosition = {
+    // 5% chance: pick one of the corruption modes at random.
+    if (random.nextInt(100) >= 5) return event
+
+    random.nextInt(5) match {
+      case 0 => event.copy(latitude  = 999.0)                       // invalid latitude
+      case 1 => event.copy(longitude = 999.0)                       // invalid longitude
+      case 2 => event.copy(speedKnots = -5.0)                       // negative speed
+      case 3 => event.copy(speedKnots = 80.0)                       // impossible speed
+      case _ => event.copy(vesselId = "")                           // empty vessel_id
     }
   }
 

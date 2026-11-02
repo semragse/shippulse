@@ -1,0 +1,13 @@
+apiVersion: 1
+
+providers:
+  - name: ShipPulse
+    orgId: 1
+    folder: ShipPulse
+    folderUid: shippulse-folder
+    type: file
+    disableDeletion: true
+    allowUiUpdates: true
+    updateIntervalSeconds: 10
+    options:
+      path: /var/lib/grafana/dashboards

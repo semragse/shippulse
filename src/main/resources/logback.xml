@@ -1,0 +1,16 @@
+<configuration>
+  <!-- Our app prints at INFO -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss} %-5level %logger{20} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- Kafka libraries: only show warnings and above -->
+  <logger name="org.apache.kafka" level="WARN"/>
+  <logger name="org.apache.zookeeper" level="WARN"/>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>

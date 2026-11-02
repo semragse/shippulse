@@ -1,0 +1,10 @@
+target/
+project/target/
+project/project/
+.bsp/
+.idea/
+.vscode/
+.metals/
+*.log
+.env
+Mine.txt

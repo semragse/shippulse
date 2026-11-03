@@ -9,8 +9,11 @@ A Scala streaming pipeline that simulates a fleet of vessels, publishes their po
 **KPI row + Live vessel map**
 ![ShipPulse dashboard — KPI and map](Screenshots/image1.png)
 
-**Events per minute · Rejects by reason · Last position per vessel**
-![ShipPulse dashboard — charts and table](Screenshots/image.png)
+**Events per minute · Rejects by reason**
+![ShipPulse dashboard — charts](Screenshots/image.png)
+
+**Last position per vessel table**
+![ShipPulse dashboard — vessel table](Screenshots/image2.png)
 
 ---
 
